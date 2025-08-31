@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	fmt.Println("My TODO List")
+	fmt.Println(Prompt("My TODO List"))
 }
