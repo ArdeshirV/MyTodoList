@@ -49,3 +49,17 @@ func (t *TodoList) displayTask() {
 		fmt.Printf("[%s] %d. %s\n", doneStatus, task.ID, task.Title)
 	}
 }
+
+func (t *TodoList) UpdateTaskStatus(taskID int, isDone bool) {
+    for i, task := range t.Tasks {
+        if task.ID == taskID {
+            t.Tasks[i].IsDone = isDone
+            fmt.Println("Task status updated successfully")
+            return
+        }
+    }
+    fmt.Println("Task not found!")
+}
+
+
+
