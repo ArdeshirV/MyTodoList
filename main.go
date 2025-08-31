@@ -8,10 +8,6 @@ import (
 	"strings"
 )
 
-func main() {
-	fmt.Println(Prompt("My TODO List"))
-}
-
 type Task struct {
 	ID     int
 	Title  string
@@ -32,7 +28,7 @@ func (t *TodoList) addTask(title string) {
 	fmt.Println("Task added successfully")
 }
 
-func (t *TodoList) displayTask() {
+func (t *TodoList) displayTasks() {
 	if len(t.Tasks) == 0 {
 		fmt.Println("No tasks found!")
 		return
@@ -50,7 +46,7 @@ func (t *TodoList) displayTask() {
 	}
 }
 
-func (t *TodoList) UpdateTaskStatus(taskID int, isDone bool) {
+func (t *TodoList) updateTaskStatus(taskID int, isDone bool) {
 	for i, task := range t.Tasks {
 		if task.ID == taskID {
 			t.Tasks[i].IsDone = isDone
@@ -70,4 +66,50 @@ func (t *TodoList) deleteTask(taskID int) {
 		}
 	}
 	fmt.Println("Task not found to delete!")
+}
+
+func main() {
+	todo := TodoList{}
+
+	scanner := bufio.NewScanner(os.Stdin)
+	for {
+		fmt.Println("\n==== Todo List Menu ====")
+		fmt.Println("1. Add Tasks")
+		fmt.Println("2. Display Tasks")
+		fmt.Println("3. Update Tasks Status")
+		fmt.Println("4. Delete Task")
+		fmt.Println("5. Exit")
+		fmt.Print("Enter your choice: ")
+
+		scanner.Scan()
+		choice := scanner.Text()
+
+		switch choice {
+		case "1":
+			fmt.Print("Enter task title:")
+			scanner.Scan()
+			title := scanner.Text()
+			todo.addTask(strings.TrimSpace(title))
+		case "2":
+			todo.displayTasks()
+		case "3":
+			fmt.Print("Enter task ID:")
+			scanner.Scan()
+			taskID, _ := strconv.Atoi(scanner.Text())
+			fmt.Print("Enter task status (true/false): ")
+			scanner.Scan()
+			status := scanner.Text()
+			todo.updateTaskStatus(taskID, strings.ToLower(status) == "true")
+		case "4":
+			fmt.Print("Enter task ID")
+			scanner.Scan()
+			taskID, _ := strconv.Atoi(scanner.Text())
+			todo.deleteTask(taskID)
+		case "5":
+			fmt.Println("Exiting...")
+			os.Exit(0)
+		default:
+			fmt.Println("Invalid choice. Please try again.")
+		}
+	}
 }
