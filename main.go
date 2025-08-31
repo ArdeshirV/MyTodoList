@@ -51,15 +51,23 @@ func (t *TodoList) displayTask() {
 }
 
 func (t *TodoList) UpdateTaskStatus(taskID int, isDone bool) {
-    for i, task := range t.Tasks {
-        if task.ID == taskID {
-            t.Tasks[i].IsDone = isDone
-            fmt.Println("Task status updated successfully")
-            return
-        }
-    }
-    fmt.Println("Task not found!")
+	for i, task := range t.Tasks {
+		if task.ID == taskID {
+			t.Tasks[i].IsDone = isDone
+			fmt.Println("Task status updated successfully")
+			return
+		}
+	}
+	fmt.Println("Task not found to update!")
 }
 
-
-
+func (t *TodoList) deleteTask(taskID int) {
+	for i, task := range t.Tasks {
+		if task.ID == taskID {
+			t.Tasks = append(t.Tasks[:i], t.Tasks[i+1:]...)
+			fmt.Println("Task deleted successfully")
+			return
+		}
+	}
+	fmt.Println("Task not found to delete!")
+}
