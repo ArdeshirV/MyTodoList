@@ -1,11 +1,9 @@
-package main 
+package main
 
 import (
-    "fmt"
+	"fmt"
 )
 
 func main() {
-    fmt.Println("My TODO List")
+	fmt.Println("My TODO List")
 }
-
-
